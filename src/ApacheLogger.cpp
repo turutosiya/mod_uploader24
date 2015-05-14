@@ -31,6 +31,9 @@
 #include "Environment.h"
 
 #include "http_log.h"
+#ifdef APLOG_USE_MODULE
+APLOG_USE_MODULE(uploader);
+#endif
 
 #include "ApacheLogger.h"
 #include "SourceInfo.h"
@@ -67,7 +70,7 @@ void ApacheLogger::info(const char *file, int line, server_rec *s,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_ERROR(file, line, APLOG_INFO, 0, s, "%s", message);
+    AP_LOG_ERROR(file, line, APLOG_MODULE_INDEX, APLOG_INFO, 0, s, "%s", message);
 }
 
 void ApacheLogger::warn(const char *file, int line, server_rec *s,
@@ -81,7 +84,7 @@ void ApacheLogger::warn(const char *file, int line, server_rec *s,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_ERROR(file, line, APLOG_WARNING, 0, s, "%s", message);
+    AP_LOG_ERROR(file, line, APLOG_MODULE_INDEX, APLOG_WARNING, 0, s, "%s", message);
 }
 
 void ApacheLogger::error(const char *file, int line, server_rec *s,
@@ -95,7 +98,7 @@ void ApacheLogger::error(const char *file, int line, server_rec *s,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_ERROR(file, line, APLOG_ERR, 0, s, "%s", message);
+    AP_LOG_ERROR(file, line, APLOG_MODULE_INDEX, APLOG_ERR, 0, s, "%s", message);
 }
 
 void ApacheLogger::info(const char *file, int line,
@@ -109,7 +112,7 @@ void ApacheLogger::info(const char *file, int line,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_RERROR(file, line, APLOG_INFO, 0, r, "%s", message);
+    AP_LOG_RERROR(file, line, APLOG_MODULE_INDEX, APLOG_INFO, 0, r, "%s", message);
 }
 
 void ApacheLogger::warn(const char *file, int line,
@@ -123,7 +126,7 @@ void ApacheLogger::warn(const char *file, int line,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_RERROR(file, line, APLOG_WARNING, 0, r, "%s", message);
+    AP_LOG_RERROR(file, line, APLOG_MODULE_INDEX, APLOG_WARNING, 0, r, "%s", message);
 }
 
 void ApacheLogger::error(const char *file, int line,
@@ -137,7 +140,7 @@ void ApacheLogger::error(const char *file, int line,
     message = apr_pvsprintf(temp_pool.get(), format, args);
     va_end(args);
 
-    AP_LOG_RERROR(file, line, APLOG_ERR, 0, r, "%s", message);
+    AP_LOG_RERROR(file, line, APLOG_MODULE_INDEX, APLOG_ERR, 0, r, "%s", message);
 }
 
 // Local Variables:

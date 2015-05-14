@@ -150,7 +150,7 @@ void RFC1867Parser<R, W>::get_content(content_t *content)
         DUMP_INPUT_AND_THROW(MESSAGE_RFC1867_FORMAT_INVALID);
     }
 
-    if (!start_with(M::buffer_.get_data(), M::CR_LF)) {
+    if (!this->start_with(M::buffer_.get_data(), M::CR_LF)) {
         DUMP_INPUT_AND_THROW(MESSAGE_RFC1867_FORMAT_INVALID);
     }
 
@@ -162,13 +162,13 @@ void RFC1867Parser<R, W>::get_content(content_t *content)
     start = M::skip(start, M::CONTENT_DISPOSITION);
     start = M::skip(start, FORM_DATA);
 
-    start = get_param(start, line_end, M::NAME_PARAM, &(content->name));
+    start = this->get_param(start, line_end, M::NAME_PARAM, &(content->name));
 
     if (start == NULL) {
         DUMP_INPUT_AND_THROW(MESSAGE_RFC1867_FORMAT_INVALID);
     }
 
-    start = get_param(start, line_end, FILENAME_PARAM,
+    start = this->get_param(start, line_end, FILENAME_PARAM,
                       &(content->file.name));
 
     if (start == NULL) { // テキスト
@@ -207,7 +207,7 @@ const char *RFC1867Parser<R, W>::get_boundary(const char *content_type)
     start = M::skip(content_type, MULTIPART_FORM_DATA);
     end = content_type+strlen(content_type);
 
-    if (get_param(start, end, M::BOUNDARY_PARAM, &boundary) == NULL) {
+    if (this->get_param(start, end, M::BOUNDARY_PARAM, &boundary) == NULL) {
         THROW(MESSAGE_RFC1867_CONTENT_TYPE_INVALID);
     }
 

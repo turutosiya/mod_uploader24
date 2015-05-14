@@ -140,7 +140,7 @@ public:
     };
     static const char *get_remote_ip(Handle *r)
     {
-        return r->connection->remote_ip;
+        return r->connection->client_ip;
     };
     static apr_sockaddr_t *get_remote_addr(Handle *r)
     {
@@ -157,7 +157,7 @@ public:
 
         return remote_addr;
 #else
-        return r->connection->remote_addr;
+        return r->connection->client_addr;
 #endif
     };
     static const char *get_user_agent(Handle *r)
